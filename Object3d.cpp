@@ -5,6 +5,7 @@
 #include<sstream>
 #include<string>
 #include<vector>
+#include"Model.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -48,6 +49,9 @@ void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int wind
 	assert(device);
 
 	Object3d::device = device;
+
+	//モデルにデバイスをセット
+	Model::SetDevice(device);
 
 	// デスクリプタヒープの初期化
 	InitializeDescriptorHeap();
