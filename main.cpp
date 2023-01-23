@@ -6,7 +6,7 @@
 #include"Sprite.h"
 
 #include"Object3d.h"
-
+#include"Model.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -49,8 +49,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     sprite->Initialize(spriteCommon,1);
     //sprite->SetColor({ 0,1,1,1 });
 
+    //OBJからモデルデータを読み込む
+    Model* model_1 = Model::LoadFromOBJ("ground");
+    Model* model_2 = Model::LoadFromOBJ("triangle_mat");
     //3Dオブジェクト生成
-    Object3d* object3d = Object3d::Create();
+    Object3d* object3d_1 = Object3d::Create();
+    Object3d* object3d_2 = Object3d::Create();
+    Object3d* object3d_3 = Object3d::Create();
+    //オブジェクトにモデルをひも付ける
+    object3d_1->SetModel(model_1);
+    object3d_2->SetModel(model_2);
+    object3d_3->SetModel(model_2);
+    //3Dオブジェクトの位置を指定
+    object3d_1->SetPosition({ 0,-50,0 });
+    object3d_2->SetPosition({ -5,0,-5 });
+    object3d_3->SetPosition({ +5,0,+5 });
+    //3Dオブジェクトの大きさを指定
+    object3d_1->SetScale({ 10.0f,10.0f,10.0f });
+    object3d_2->SetScale({ 10.0f,10.0f,10.0f });
+    object3d_3->SetScale({ 10.0f,10.0f,10.0f });
+    
 
 #pragma endregion 最初のシーン初期化 
     // ゲームループ
@@ -72,11 +90,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         sprite->SetPosition(position);
         sprite->Update();
 
-        object3d->Update();
+        //3Dオブジェクト更新
+        object3d_1->Update();
+        object3d_2->Update();
+        object3d_3->Update();
 
-       /* DirectX::XMFLOAT2 size = sprite->GetSize();
-        size.y += 1.0f;
-        sprite->SetSize(size);*/
+     
        
 
         //描画前処理
@@ -91,7 +110,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         Object3d::PreDraw(dxCommon->GetCommandList());
 
         //3Dオブジェクトの描画
-        object3d->Draw();
+        object3d_1->Draw();
+        object3d_2->Draw();
+        object3d_3->Draw();
 
         //3Dオブジェクト描画後処理
         Object3d::PostDraw();
@@ -100,7 +121,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
        //描画後処理
         dxCommon->PostDraw();
         
-
     }
 
 
@@ -119,7 +139,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     delete dxCommon;
     dxCommon = nullptr;
 
-    delete object3d;
+    
+    //3Dモデル解放
+    delete model_1;
+    delete model_2;
+    //3Dオブジェクト解放
+    delete object3d_1;
+    delete object3d_2;
+    delete object3d_3;
 
    //WindowsAPIの終了処理
     winApp->Finalize();

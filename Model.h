@@ -50,7 +50,7 @@ public:
 
 public://静的メンバ関数
 	//OBJファイルから3Dモデルを読み込む
-	static Model* LoadFromOBJ();
+	static Model* LoadFromOBJ(const std::string& modelname);
 
 	/// <summary>
 	/// マテリアル読み込み
@@ -117,7 +117,7 @@ private://静的メンバ変数
 
 private://非公開のメンバ関数
 	//OBJファイルから3Dモデルを読み込む(非公開)
-	void LoadFromOBJInternal();
+	void LoadFromOBJInternal(const std::string& modelname);
 public:
 	//setter
 	static void SetDevice(ID3D12Device* device) { Model::device = device; }

@@ -10,7 +10,7 @@ using namespace std;
 //静的メンバ変数の実体
 ID3D12Device* Model::device = nullptr;
 
-Model* Model::LoadFromOBJ()
+Model* Model::LoadFromOBJ(const std::string& modelname)
 {
 	//新たなModel型のインスタンスのメモリを確保
 	Model* model = new Model();
@@ -19,7 +19,7 @@ Model* Model::LoadFromOBJ()
 	model->InitializeDescriptorHeap();
 
 	//読み込み
-	model->LoadFromOBJInternal();
+	model->LoadFromOBJInternal(modelname);
 
 	//バッファ生成
 	model->CreateBuffers();
@@ -27,13 +27,13 @@ Model* Model::LoadFromOBJ()
 	return model;
 }
 
-void Model::LoadFromOBJInternal()
+void Model::LoadFromOBJInternal(const std::string&modelname)
 {
 	//ファイルストリーム
 	std::ifstream file;
 	//.objファイルを開く
 	//file.open("Resources/triangle_tex/triangle_tex.obj");
-	const string modelname = "triangle_mat";
+	//const string modelname = "triangle_mat";
 	const string filename = modelname + ".obj";//"triangle_mat.obj"
 	const string directoryPath = "Resources/" + modelname + "/";//"Resources/triangle_mat/"
 	file.open(directoryPath + filename);//"Resources/triangle_mat/triangle_mat.obj"
