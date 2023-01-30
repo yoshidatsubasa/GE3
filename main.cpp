@@ -10,6 +10,8 @@
 
 #include"ImGuiManager.h"
 
+#include<imgui.h>
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -40,6 +42,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     ImGuiManager* imgui = nullptr;
     imgui = new ImGuiManager();
     imgui->Initialize(winApp,dxCommon);
+
+   
 
     //3Dオブジェクト静的初期化
     Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -101,6 +105,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
         //Imgui更新
         imgui->Begin();
+
+        //デモウィンドウの表示オン
+        ImGui::ShowDemoWindow();
+
         imgui->End();
 
         //描画前処理
