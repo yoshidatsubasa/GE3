@@ -28,6 +28,9 @@ public:
 
 	ID3D12GraphicsCommandList* GetCommandList()const { return commandList.Get(); }
 
+	//バックバッファの数を生成
+	size_t GetBackBufferCount() const { return backBuffers.size(); }
+
 private:
 	///<summary>
 	///デバイス初期化

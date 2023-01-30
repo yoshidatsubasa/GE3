@@ -8,6 +8,8 @@
 #include"Object3d.h"
 #include"Model.h"
 
+#include"ImGuiManager.h"
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -35,6 +37,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     spriteCommon->LoadTexture(0, "texture.png");
     spriteCommon->LoadTexture(1, "reimu.png");
 
+    ImGuiManager* imgui = nullptr;
+    imgui = new ImGuiManager();
+    imgui->Initialize(winApp,dxCommon);
 
     //3Dオブジェクト静的初期化
     Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
@@ -83,7 +88,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         }
 
         input->Update();
-       
 
         DirectX::XMFLOAT2 position = sprite->GetPosition();
         position.x += 0.1f;
@@ -95,8 +99,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         object3d_2->Update();
         object3d_3->Update();
 
-     
-       
+        //Imgui更新
+        imgui->Begin();
+        imgui->End();
 
         //描画前処理
         dxCommon->PreDraw();
@@ -114,6 +119,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         object3d_2->Draw();
         object3d_3->Draw();
 
+        //Imgui描画
+        imgui->Draw();
         //3Dオブジェクト描画後処理
         Object3d::PostDraw();
 #pragma endregion  最初のシーンの描画 
@@ -139,6 +146,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     delete dxCommon;
     dxCommon = nullptr;
 
+    delete imgui;
+    imgui = nullptr;
     
     //3Dモデル解放
     delete model_1;

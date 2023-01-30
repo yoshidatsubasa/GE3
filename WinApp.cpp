@@ -1,6 +1,23 @@
 #include "WinApp.h"
+#include "imgui/imgui_impl_win32.h"
 
 #pragma comment(lib,"winmm.lib") 
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    //ImGui用ウィンドウプロシージャ呼び出し
+    if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+        return true;
+    //メッセージで分解
+    switch (msg) {
+    case WM_DESTROY:  //ウィンドウが破棄された
+        PostQuitMessage(0);  //OSに対して、 アプリの終了を伝える
+        return 0;
+    }
+    return DefWindowProc(hwnd, msg, wparam, lparam);  //標準の処理を行う
+}
 void WinApp::Initialize()
 {
 
@@ -38,16 +55,7 @@ void WinApp::Initialize()
 }
 
 
-LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
-{
-    //メッセージで分解
-    switch (msg) {
-    case WM_DESTROY:  //ウィンドウが破棄された
-        PostQuitMessage(0);  //OSに対して、 アプリの終了を伝える
-        return 0;
-    }
-    return DefWindowProc(hwnd, msg, wparam, lparam);  //標準の処理を行う
-}
+
 
 void WinApp::Finalize()
 {
