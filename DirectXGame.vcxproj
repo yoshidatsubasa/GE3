@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="OBJShaderHeader.hlsli" />
+    <None Include="readme.md" />
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>

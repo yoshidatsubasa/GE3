@@ -50,6 +50,9 @@
     <None Include="OBJShaderHeader.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
+    <None Include="readme.md">
+      <Filter>ソース ファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
